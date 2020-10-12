@@ -10,6 +10,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore.InMemory;
+using BasicsAuthentications.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace BasicsAuthentications
 {
@@ -25,11 +29,32 @@ namespace BasicsAuthentications
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                    .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, config=>{
-                        config.Cookie.Name = "BasicAuthTest";
-                        config.LoginPath ="/Home/Authenticate";
-                    });
+
+            services.AddDbContext<UserDbContext>(config=> {
+                config.UseInMemoryDatabase("InMemoryIdentity");
+            });
+
+            services.AddIdentity<IdentityUser, IdentityRole>(config => {
+                config.Password.RequireDigit=false;
+                config.Password.RequireUppercase=false;
+                config.Password.RequireNonAlphanumeric=false;
+                config.Password.RequiredLength=4;
+
+            })
+                    .AddEntityFrameworkStores<UserDbContext>()
+                    .AddDefaultTokenProviders();
+
+            services.ConfigureApplicationCookie(config=>{
+                config.Cookie.Name = "Identity.Cookie";
+                config.LoginPath = "/home/login";
+                config.LogoutPath = "/home/logout";
+            });
+
+            // services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            //         .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, config=>{
+            //             config.Cookie.Name = "BasicAuthTest";
+            //             config.LoginPath ="/Home/Authenticate";
+            //         });
             services.AddControllersWithViews();
         }
 
