@@ -34,7 +34,7 @@ namespace BasicsAuthentications
         {
 
             services.AddDbContext<UserDbContext>(config=> {
-                config.UseInMemoryDatabase("InMemoryIdentity");
+                config.UseSqlite("DataSource=user.db");
             });
 
             services.AddIdentity<IdentityUser, IdentityRole>(config => {
@@ -76,7 +76,7 @@ namespace BasicsAuthentications
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserDbContext userDb)
         {
             if (env.IsDevelopment())
             {
@@ -88,6 +88,9 @@ namespace BasicsAuthentications
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            userDb.Database.EnsureCreated(); // auto create db if not exist
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
