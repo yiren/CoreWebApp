@@ -27,11 +27,25 @@ namespace BasicsAuthentications.Controllers {
         public IActionResult Index () {
             return View ();
         }
+        
 
         [Authorize]
         public IActionResult Privacy () {
             return View ();
         }
+        [Authorize(Policy="Claim.Country")]
+        public IActionResult ClaimAuth()
+        {
+            
+            return View();
+        }
+        [Authorize(Roles="Admin")]
+        public IActionResult RoleAuth()
+        {
+            
+            return View();
+        }
+        
 
         public IActionResult Authenticate () {
             var N5Claims = new List<Claim> () {
@@ -86,13 +100,25 @@ namespace BasicsAuthentications.Controllers {
 
         [HttpPost]
         public async Task<IActionResult> Register(string username, string password) {
-            // TODO: Your code here
-            var user = new IdentityUser(username){
-                Email=""
+            
+            // var user = new IdentityUser(username){
+            //     Email=""
+            // };
+            var userClaims = new List<Claim> () {
+                new Claim (ClaimTypes.Name, username),
+                new Claim (ClaimTypes.Country, "Taiwan"),
+                //new Claim (ClaimTypes.Role, "Admin"),
+                new Claim ("DeptCode", "1905")
             };
-            var result = await this.userManager.CreateAsync(user, password);
+            
+            var user = new IdentityUser(username);
+            
+            var result = await userManager.CreateAsync(user, password);
             if(result.Succeeded){
-                await signInManager.SignInAsync(user, isPersistent:false);
+
+                var claimResult =await userManager.AddClaimsAsync(user, userClaims);
+                if(claimResult.Succeeded)
+                    await signInManager.SignInAsync(user, isPersistent:false);
                 return RedirectToAction("Index");
             }
             return RedirectToAction ("Index");

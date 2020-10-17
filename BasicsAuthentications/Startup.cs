@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using System.Net;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.InMemory;
 using BasicsAuthentications.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
+using BasicsAuthentications.AuthRequirements;
 
 namespace BasicsAuthentications
 {
@@ -50,6 +53,20 @@ namespace BasicsAuthentications
                 config.LogoutPath = "/home/logout";
             });
 
+            services.AddAuthorization(config=>{
+                // var policyBuilder = new AuthorizationPolicyBuilder();
+                // var defaultPolicy = policyBuilder
+                //     .RequireAuthenticatedUser()
+                //     .RequireClaim(ClaimTypes.Country)
+                //     .Build();
+                // config.DefaultPolicy = defaultPolicy;
+                config.AddPolicy("Claim.Country", policyBuilder=>{
+                    //policyBuilder.AddRequirements(new CustomRequirement(ClaimTypes.Country));
+                    policyBuilder.RequireCustomClaim(ClaimTypes.Country);
+                });
+            });
+
+            services.AddScoped<IAuthorizationHandler, CustomRequirementHandler>();
             // services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             //         .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, config=>{
             //             config.Cookie.Name = "BasicAuthTest";
