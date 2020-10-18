@@ -1,1 +1,18 @@
-<h1>I have Country Claim</h1>
+
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService authorizationService
+@{
+    var localityResult =await authorizationService.AuthorizeAsync(User, "Claim.Locality");
+}
+
+<h1>I have Country Claim.</h1>
+
+
+@if(localityResult.Succeeded)
+{
+    <h2>I have Locality Claim.</h2>
+}else{
+    <h2>I have no Locality Claim.</h2>
+}
+
+

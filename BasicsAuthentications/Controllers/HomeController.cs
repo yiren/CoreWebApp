@@ -124,5 +124,21 @@ namespace BasicsAuthentications.Controllers {
             return RedirectToAction ("Index");
         }
 
+        public async Task<IActionResult> MobileAuthInline(
+            [FromServices]IAuthorizationService authorizationService
+        )
+        {   
+            var policyBuilder =  new AuthorizationPolicyBuilder();
+            var mobilePolicy = policyBuilder.RequireClaim(ClaimTypes.MobilePhone).Build();
+            var authResult = await authorizationService.AuthorizeAsync(User, mobilePolicy);
+            if(authResult.Succeeded){
+                return View();
+            }else{
+                return RedirectToAction("Index");
+            }
+            
+        }
+        
+
     }
 }

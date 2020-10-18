@@ -64,6 +64,10 @@ namespace BasicsAuthentications
                     //policyBuilder.AddRequirements(new CustomRequirement(ClaimTypes.Country));
                     policyBuilder.RequireCustomClaim(ClaimTypes.Country);
                 });
+
+                config.AddPolicy("Claim.Locality", builder=>{
+                    builder.RequireClaim(ClaimTypes.Locality).Build();
+                });
             });
 
             services.AddScoped<IAuthorizationHandler, CustomRequirementHandler>();
