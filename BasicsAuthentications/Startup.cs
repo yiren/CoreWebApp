@@ -17,6 +17,8 @@ using BasicsAuthentications.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using BasicsAuthentications.AuthRequirements;
+using Microsoft.AspNetCore.Authentication;
+using BasicsAuthentications.ClaimTransformation;
 
 namespace BasicsAuthentications
 {
@@ -70,12 +72,15 @@ namespace BasicsAuthentications
                 });
             });
 
+            
             services.AddScoped<IAuthorizationHandler, CustomRequirementHandler>();
+            services.AddScoped<IClaimsTransformation, ClaimsTransformation>();
             // services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             //         .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, config=>{
             //             config.Cookie.Name = "BasicAuthTest";
             //             config.LoginPath ="/Home/Authenticate";
             //         });
+
             services.AddControllersWithViews();
         }
 
