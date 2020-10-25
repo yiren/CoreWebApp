@@ -1,0 +1,12 @@
+@model string
+
+@{
+    string url = $"/oauth/authorize{Model}";
+}
+
+@url
+
+<form action="@url" method="post">
+    <input type="text" name="username">
+    <button type="submit">Submit</button>
+</form>
