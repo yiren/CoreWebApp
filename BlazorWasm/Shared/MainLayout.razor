@@ -1,15 +1,49 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="sidebar">
-    <NavMenu />
-</div>
+<MatAppBarContainer>
+    <MatAppBar Fixed="true">
+        <MatAppBarRow>
+            <MatAppBarSection>
+                <MatIconButton Icon="menu" @onclick="ToggleMenu"></MatIconButton>
+                <MatAppBarTitle>BlazorWasm</MatAppBarTitle>
+            </MatAppBarSection>
+            <MatAppBarSection Align="@MatAppBarSectionAlign.Start">
+    
+            </MatAppBarSection>
+        </MatAppBarRow>
+    </MatAppBar>
+ 
+    <MatAppBarContent>
+        <MatDrawerContainer Style="padding:20px">
+            <MatDrawer @bind-Opened="@Opened">
+                <MatList>
+                    <MatListItem Href="/">
+                        Home
+                    </MatListItem>
+                    <MatDivider></MatDivider>
+                    <MatListItem Href="/fetchdata">
+                        Fetch Data
+                    </MatListItem>
+                    <MatDivider></MatDivider>
+                    <MatListItem Href="/counter">
+                        Counter
+                    </MatListItem>
+                </MatList>
+            </MatDrawer>
+            <MatDrawerContent>
+                @Body
+            </MatDrawerContent>
+        </MatDrawerContainer>
+       
+    </MatAppBarContent>
+</MatAppBarContainer>
+      
 
-<div class="main">
-    <div class="top-row px-4">
-        <a href="http://blazor.net" target="_blank" class="ml-md-auto">About</a>
-    </div>
-
-    <div class="content px-4">
-        @Body
-    </div>
-</div>
+@code{
+    bool Opened = true;
+ 
+    void ToggleMenu()
+    {
+        Opened = !Opened;
+    }
+}
