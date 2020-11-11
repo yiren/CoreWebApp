@@ -1,6 +1,6 @@
 using Fluxor;
 
-namespace BlazorWasm.store
+namespace BlazorWasm.Store
 {
     public static class CounterReducer
     {

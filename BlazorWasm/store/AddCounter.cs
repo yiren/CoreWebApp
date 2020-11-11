@@ -1,4 +1,4 @@
-namespace BlazorWasm.store
+namespace BlazorWasm.Store
 {
     public record AddCounter
     {

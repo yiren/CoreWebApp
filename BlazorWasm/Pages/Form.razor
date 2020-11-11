@@ -1,0 +1,51 @@
+@page "/form"
+@using System.ComponentModel.DataAnnotations
+
+<p>
+    <EditForm Model="@motor" OnValidSubmit="HandleValidSubmit">
+        <DataAnnotationsValidator/>
+        <ValidationSummary />
+        <p>
+            <MatTextField @bind-Value="motor.MotorNo" Label="馬達編號" Outlined="true"></MatTextField>
+        </p>
+        <p>
+            <MatTextField @bind-Value="motor.Name" Label="馬達名稱" Outlined="true"></MatTextField>
+        </p>
+        <p>
+            <MatTextField @bind-Value="motor.RatedCurrent" Label="額定電流" Outlined="true"></MatTextField>
+        </p>
+
+        
+        <MatButton Type="Submit">存檔</MatButton>
+    </EditForm>
+</p>
+
+
+
+@code{
+
+    public record MotorDto
+    {
+        public MotorDto()
+        {
+            
+        }
+        [Display(Name="馬達編號")]
+        [Required(ErrorMessage="馬達編號是必填資料")]
+        public string MotorNo { get; set; }
+        [Required(ErrorMessage="名稱是必填資料")]
+        public string Name { get; set; }
+        [Required(ErrorMessage="額定電流必填")]
+        public int RatedCurrent { get; set; } 
+        public string FrontBearingType { get; set; }
+        public string RearBearingType { get; set; }
+        public string Brand { get; set; }
+        public string PartNo { get; set; }
+    }
+    private MotorDto motor = new MotorDto();
+
+    private void HandleValidSubmit()
+    {
+        
+    }
+}

@@ -5,16 +5,15 @@
         <MatAppBarRow>
             <MatAppBarSection>
                 <MatIconButton Icon="menu" @onclick="ToggleMenu"></MatIconButton>
-                <MatAppBarTitle>BlazorWasm</MatAppBarTitle>
+                <MatAppBarTitle>BlazorWasm 卸煤機馬達資料</MatAppBarTitle>
             </MatAppBarSection>
             <MatAppBarSection Align="@MatAppBarSectionAlign.Start">
-    
             </MatAppBarSection>
         </MatAppBarRow>
     </MatAppBar>
  
     <MatAppBarContent>
-        <MatDrawerContainer Style="padding:20px">
+        <MatDrawerContainer  Style="height: 800px;padding:20px">
             <MatDrawer @bind-Opened="@Opened">
                 <MatList>
                     <MatListItem Href="/">
@@ -22,11 +21,15 @@
                     </MatListItem>
                     <MatDivider></MatDivider>
                     <MatListItem Href="/fetchdata">
-                        Fetch Data
+                        FetchData
                     </MatListItem>
                     <MatDivider></MatDivider>
                     <MatListItem Href="/counter">
                         Counter
+                    </MatListItem>
+                    <MatDivider></MatDivider>
+                    <MatListItem Href="/form">
+                        Form
                     </MatListItem>
                 </MatList>
             </MatDrawer>

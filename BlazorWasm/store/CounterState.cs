@@ -1,5 +1,5 @@
 using Fluxor;
-namespace BlazorWasm.store
+namespace BlazorWasm.Store
 {
     public record CounterState
     {
