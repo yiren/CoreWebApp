@@ -13,7 +13,7 @@
     </MatAppBar>
  
     <MatAppBarContent>
-        <MatDrawerContainer  Style="height: 800px;padding:20px">
+       <MatDrawerContainer  Style="height: 800px;margin:20px">
             <MatDrawer @bind-Opened="@Opened">
                 <MatList>
                     <MatListItem Href="/">
@@ -37,10 +37,11 @@
                 @Body
             </MatDrawerContent>
         </MatDrawerContainer>
-       
     </MatAppBarContent>
 </MatAppBarContainer>
-      
+
+ 
+           
 
 @code{
     bool Opened = true;

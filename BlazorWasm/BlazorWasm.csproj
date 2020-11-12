@@ -8,6 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="BlazorStrap" Version="1.5.0-preview-01" />
+    <PackageReference Include="BlazorStrap.Extensions.BSDataTable" Version="1.0.0" />
+    <PackageReference Include="BlazorStrap.Extensions.FluentValidation" Version="1.0.1" />
     <PackageReference Include="Fluxor" Version="3.8.0" />
     <PackageReference Include="Fluxor.Blazor.Web" Version="3.8.0" />
     <PackageReference Include="Fluxor.Blazor.Web.ReduxDevTools" Version="3.8.0" />
